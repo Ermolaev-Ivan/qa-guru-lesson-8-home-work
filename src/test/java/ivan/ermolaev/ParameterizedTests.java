@@ -23,12 +23,13 @@ public class ParameterizedTests {
 
     @BeforeEach
     void beforeEach() {
+        open("https://habr.ru");
         System.out.println("@BeforeEach запускается перед каждым тестом");
     }
 
     static Stream<Arguments> annotationMethodSource() {
         return Stream.of(
-         Arguments.of("Selenide", "Автоматизация тестирования с использованием Selenide через Selenoid в Docker контейнере"),
+                Arguments.of("Selenide", "Автоматизация тестирования с использованием Selenide через Selenoid в Docker контейнере"),
                 Arguments.of("JUnit", "JUnit, Параллельное тестирование с JUnit 5 и Selenium [Учебное пособие]")
         );
     }
@@ -37,12 +38,10 @@ public class ParameterizedTests {
             "Selenide",
             "JUnit"})
     @ParameterizedTest(name = "Тестирование поиска хабра при помощи аннотации \"ValueSource\" с тестовыми данными: {0}")
-    void habrSearchValueTest(String testData){
-        open("https://habr.ru");
+    void habrSearchValueTest(String testData) {
         $(".tm-header-user-menu__search").click();
         $(".tm-input-text-decorated__input").setValue(testData).pressEnter();
-        $$(".tm-articles-list__item h2 span").first()
-                .shouldHave(Condition.text(testData));
+        $(".tm-articles-list__item h2 span").shouldHave(Condition.text(testData));
     }
 
     @CsvSource(value = {
@@ -50,8 +49,7 @@ public class ParameterizedTests {
             "JUnit, Параллельное тестирование с JUnit 5 и Selenium [Учебное пособие]"
     })
     @ParameterizedTest(name = "Тестирование поиска хабра при помощи аннотации \"CsvSource\" с тестовыми данными: {0}")
-    void habrSearchCsvSourceTest(String testData, String expected){
-        open("https://habr.ru");
+    void habrSearchCsvSourceTest(String testData, String expected) {
         $(".tm-header-user-menu__search").click();
         $(".tm-input-text-decorated__input").setValue(testData).pressEnter();
         $$(".tm-articles-list__item h2 span").first()
@@ -60,8 +58,7 @@ public class ParameterizedTests {
 
     @MethodSource("annotationMethodSource")
     @ParameterizedTest(name = "Тестирование поиска хабра при помощи аннотации \"MethodSource\" с тестовыми данными: {0}")
-    void habrSearchMethodSourceTest(String testData, String expected){
-        open("https://habr.ru");
+    void habrSearchMethodSourceTest(String testData, String expected) {
         $(".tm-header-user-menu__search").click();
         $(".tm-input-text-decorated__input").setValue(testData).pressEnter();
         $$(".tm-articles-list__item h2 span").first()
