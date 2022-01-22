@@ -52,8 +52,7 @@ public class ParameterizedTests {
     void habrSearchCsvSourceTest(String testData, String expected) {
         $(".tm-header-user-menu__search").click();
         $(".tm-input-text-decorated__input").setValue(testData).pressEnter();
-        $$(".tm-articles-list__item h2 span").first()
-                .shouldHave(Condition.text(expected));
+        $(".tm-articles-list__item h2 span").shouldHave(Condition.text(expected));
     }
 
     @MethodSource("annotationMethodSource")
@@ -61,7 +60,6 @@ public class ParameterizedTests {
     void habrSearchMethodSourceTest(String testData, String expected) {
         $(".tm-header-user-menu__search").click();
         $(".tm-input-text-decorated__input").setValue(testData).pressEnter();
-        $$(".tm-articles-list__item h2 span").first()
-                .shouldHave(Condition.text(expected));
+        $(".tm-articles-list__item h2 span").shouldHave(Condition.text(expected));
     }
 }
